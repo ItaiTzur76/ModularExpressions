@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Source-Generator Error MODEX7</title>
+        <link rel="stylesheet" href="https://learn.microsoft.com/static/assets/0.4.027775677/styles/site-ltr.css">
+    </head>
+    <body>
+        <div class="content uhf-container">
+            <p><a href="https://GitHub.com/ItaiTzur76/ModularExpressions">ModularExpressions</a></p>
+            <h1>Source-Generator Error MODEX7</h1>
+            <p><strong>The value of property '<i>property</i>' in class '<i>class</i>' contains a call to '<i>Modex method</i>' with the argument '<i>argument</i>' which is not a compile-time constant so it cannot be used as part of the calculation of a GenerateModex attribute</strong></p>
+            <p>Arguments to <code>Modex</code> methods must be compile-time constants (i.e. literal values or <code>const</code>) in order to participate in the calculation of a modular expression.</p>
+            <h2>Example</h2>
+            <p>The following sample generates MODEX7:</p>
+            <pre>
+<span class="hljs-comment">// MODEX7.cs</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">static</span> ModularExpressions.<span class="hljs-title">Modex</span>;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyNamespace</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>
+{
+    [<span class="hljs-title">GenerateModex</span>(<span class="hljs-keyword">nameof</span>(DigitsModex))]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">partial</span> <span class="hljs-built_in">string</span> <span class="hljs-string">DigitsPattern</span>();   <span class="hljs-comment">// MODEX7</span>
+    <span class="hljs-comment">//                           ^^^^^^^^^^^^^</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> DigitsModex => Digit.<span class="hljs-string">Times</span>(NumberOfDigits);
+
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">static</span> <span class="hljs-keyword">int</span> NumberOfDigits { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+}
+</pre>
+        </div>
+    </body>
+</html>

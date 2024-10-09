@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Source-Generator Error MODEX5</title>
+        <link rel="stylesheet" href="https://learn.microsoft.com/static/assets/0.4.027775677/styles/site-ltr.css">
+    </head>
+    <body>
+        <div class="content uhf-container">
+            <p><a href="https://GitHub.com/ItaiTzur76/ModularExpressions">ModularExpressions</a></p>
+            <h1>Source-Generator Error MODEX5</h1>
+            <p><strong>'<i>member</i>' in class '<i>class</i>' is not a property so it cannot be used as part of the calculation of a GenerateModex attribute</strong></p>
+            <p>Only members defined as properties can participate in the calculation of a modular expression; other members (such as methods) cannot, even if they have a <code>Modex</code> return type.</p>
+            <h2>Example</h2>
+            <p>The following sample generates MODEX5:</p>
+            <pre>
+<span class="hljs-comment">// MODEX5.cs</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">static</span> ModularExpressions.<span class="hljs-title">Modex</span>;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyNamespace</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>
+{
+    [<span class="hljs-title">GenerateModex</span>(<span class="hljs-keyword">nameof</span>(FiveCapitalVowelsModex))]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">partial</span> <span class="hljs-built_in">string</span> <span class="hljs-string">FiveCapitalVowelsPattern</span>();   <span class="hljs-comment">// MODEX5</span>
+    <span class="hljs-comment">//                           ^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> FiveCapitalVowelsModex => <span class="hljs-string">CapitalVowelModex</span>().<span class="hljs-string">Times</span>(5);
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> <span class="hljs-string">CapitalVowelModex</span>() => <span class="hljs-string">AnyCharacterIn</span>('A', 'E', 'I', 'O', 'U');
+}
+</pre>
+        </div>
+    </body>
+</html>

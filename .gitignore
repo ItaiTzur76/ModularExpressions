@@ -1,0 +1,9 @@
+# Visual Studio cache/options directory
+.vs/
+
+# Build results
+bin/
+obj/
+
+# SpecFlow auto-generated files
+*.feature.cs
