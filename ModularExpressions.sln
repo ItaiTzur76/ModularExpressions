@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AF252F52-BC8D-4F5B-AB1A-5AE75E9811F6}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularExpressions.Generators.Test", "src\Generators.Test\ModularExpressions.Generators.Test.csproj", "{6458AA88-48D0-4468-A62B-FC96C10BDDF1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularExpressions.Generators", "src\Generators\ModularExpressions.Generators.csproj", "{8350BAF7-5D7C-426C-ABB7-0191ABEA5647}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source-generator-messages", "source-generator-messages", "{CD46B213-4F46-45CB-B54C-57D4C673A4DB}"
+	ProjectSection(SolutionItems) = preProject
+		source-generator-messages\modex1.html = source-generator-messages\modex1.html
+		source-generator-messages\modex2.html = source-generator-messages\modex2.html
+		source-generator-messages\modex3.html = source-generator-messages\modex3.html
+		source-generator-messages\modex4.html = source-generator-messages\modex4.html
+		source-generator-messages\modex5.html = source-generator-messages\modex5.html
+		source-generator-messages\modex6.html = source-generator-messages\modex6.html
+		source-generator-messages\modex7.html = source-generator-messages\modex7.html
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6458AA88-48D0-4468-A62B-FC96C10BDDF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6458AA88-48D0-4468-A62B-FC96C10BDDF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6458AA88-48D0-4468-A62B-FC96C10BDDF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6458AA88-48D0-4468-A62B-FC96C10BDDF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8350BAF7-5D7C-426C-ABB7-0191ABEA5647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8350BAF7-5D7C-426C-ABB7-0191ABEA5647}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8350BAF7-5D7C-426C-ABB7-0191ABEA5647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8350BAF7-5D7C-426C-ABB7-0191ABEA5647}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD46B213-4F46-45CB-B54C-57D4C673A4DB} = {AF252F52-BC8D-4F5B-AB1A-5AE75E9811F6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6526F3F8-81C3-44A8-BE58-691FAF394489}
+	EndGlobalSection
+EndGlobal

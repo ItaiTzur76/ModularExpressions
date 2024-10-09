@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Source-Generator Error MODEX1</title>
+        <link rel="stylesheet" href="https://learn.microsoft.com/static/assets/0.4.027775677/styles/site-ltr.css">
+    </head>
+    <body>
+        <div class="content uhf-container">
+            <p><a href="https://GitHub.com/ItaiTzur76/ModularExpressions">ModularExpressions</a></p>
+            <h1>Source-Generator Error MODEX1</h1>
+            <p><strong>GenerateModex attribute can only be placed on string-returning methods, but method '<i>method</i>' returns '<i>type</i>'</strong></p>
+            <p>The suggested code-fix is to change the return type to <code>string</code>.</p>
+            <h2>Example</h2>
+            <p>The following sample generates MODEX1:</p>
+            <pre>
+<span class="hljs-comment">// MODEX1.cs</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">static</span> ModularExpressions.<span class="hljs-title">Modex</span>;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyNamespace</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>
+{
+    [<span class="hljs-title">GenerateModex</span>(<span class="hljs-keyword">nameof</span>(ThreeDigitsModex))]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">partial</span> <span class="hljs-built_in">int</span> <span class="hljs-string">ThreeDigitsPattern</span>();   <span class="hljs-comment">// MODEX1</span>
+    <span class="hljs-comment">//                    ^^^</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> ThreeDigitsModex => Digit.<span class="hljs-string">Times</span>(3);
+}
+</pre>
+        </div>
+    </body>
+</html>

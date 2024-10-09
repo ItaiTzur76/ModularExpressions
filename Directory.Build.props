@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <!-- Language Setting -->
+    <Nullable>enable</Nullable>
+
+    <!-- Build Setting -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Static Analysis Setting -->
+    <AnalysisLevel>6.0-recommended</AnalysisLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="ModularExpressions" />
+  </ItemGroup>
+</Project>

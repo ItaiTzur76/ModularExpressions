@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Source-Generator Error MODEX4</title>
+        <link rel="stylesheet" href="https://learn.microsoft.com/static/assets/0.4.027775677/styles/site-ltr.css">
+    </head>
+    <body>
+        <div class="content uhf-container">
+            <p><a href="https://GitHub.com/ItaiTzur76/ModularExpressions">ModularExpressions</a></p>
+            <h1>Source-Generator Error MODEX4</h1>
+            <p><strong>Property '<i>property</i>' in class '<i>class</i>' is not an arrow property so it cannot be used as part of the calculation of a GenerateModex attribute</strong></p>
+            <p>
+                A <code>Modex</code> property must be an <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members#read-only-properties">expression-bodied read-only property</a> in order to participate in the calculation of a modular expression.
+                <br />
+                This calculation (done at compile-time) is the only purpose of such properties - they have no functionality at runtime - so declaring them with getters or setters would be meaningless, anyway.
+            </p>
+            <h2>Example</h2>
+            <p>The following sample generates MODEX4:</p>
+            <pre>
+<span class="hljs-comment">// MODEX4.cs</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">static</span> ModularExpressions.<span class="hljs-title">Modex</span>;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyNamespace</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>
+{
+    [<span class="hljs-title">GenerateModex</span>(<span class="hljs-keyword">nameof</span>(StartingWithNonWordCharacterModex))]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">partial</span> <span class="hljs-built_in">string</span> <span class="hljs-string">StartingWithNonWordCharacterPattern</span>();   <span class="hljs-comment">// MODEX4</span>
+    <span class="hljs-comment">//                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> StartingWithNonWordCharacterModex { <span class="hljs-keyword">get</span> { <span class="hljs-keyword">return</span> Beginning <span class="hljs-string">+</span> NonWordCharacter; } }
+}
+</pre>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Source-Generator Error MODEX6</title>
+        <link rel="stylesheet" href="https://learn.microsoft.com/static/assets/0.4.027775677/styles/site-ltr.css">
+    </head>
+    <body>
+        <div class="content uhf-container">
+            <p><a href="https://GitHub.com/ItaiTzur76/ModularExpressions">ModularExpressions</a></p>
+            <h1>Source-Generator Error MODEX6</h1>
+            <p><strong>A Modex-property structure must be a DAG, but the following property cycle was found under class '<i>class</i>': <i>Modex-property-cycle</i></strong></p>
+            <p>
+                The value of a <code>Modex</code> property can refer to other <code>Modex</code> properties (in the same class) which can, it turn, reference others, too, and so on.
+                <br />
+                But in order to be resolved into a (finite) <code>string</code>, there should be no cycles in this graph of references.
+            </p>
+            <h2>Example</h2>
+            <p>The following sample generates MODEX6:</p>
+            <pre>
+<span class="hljs-comment">// MODEX6.cs</span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">static</span> ModularExpressions.<span class="hljs-title">Modex</span>;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MyNamespace</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>
+{
+    [<span class="hljs-title">GenerateModex</span>(<span class="hljs-keyword">nameof</span>(Modex1))]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">partial</span> <span class="hljs-built_in">string</span> <span class="hljs-string">MyPattern</span>();   <span class="hljs-comment">// MODEX6</span>
+    <span class="hljs-comment">//                           ^^^^^^^^^</span>
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> Modex1 => Modex2.<span class="hljs-string">Times</span>(3);
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">static</span> <span class="hljs-title">Modex</span> Modex2 => <span class="hljs-string">ZeroOrOneOf</span>(Modex1);
+}
+</pre>
+        </div>
+    </body>
+</html>
