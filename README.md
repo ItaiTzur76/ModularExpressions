@@ -1,16 +1,20 @@
 # ModularExpressions for C#
 ## Project Description
 **ModularExpressions** is a Rosyln-powered generator for regular expressions from .NET syntax. With this **ModularExpressions** package, C# developers can create methods that return regular-expression patterns from basic C# modules and compile-time constants. It therefore allows developers to employ regular expressions using readable, maintainable C# code without having any familiarity with the Regex language.
+
 The **ModularExpressions** package uses a Roslyn source-generator, so these regular-expression patterns are generated at compile-time.
 
 ## Usage
 To create a Modular Expression, first create a `partial` arrow-property with `Modex` as its return-type in the class where you want the regular-expression pattern generated, and have it return the Modular Expression you want. (See **Modex Elements** below for a list of available elements.)
+
 For example, to generate a pattern that matches any text that looks like a decimal number with digit grouping:
 ```csharp
 private static Modex GroupedDecimalNumberModex => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
 ```
 Of course you would then have to make the containing class `partial` as well. (A compilation error would occur if not.)
+
 Then, create a `partial` parameterless method declaration (i.e. without a body) that returns a `string`, and decorate it with the `GenerateModex` attribute, with the name of the `Modex` property as argument.
+
 For the decimal-number example above, it would look like:
 ```csharp
 [GenerateModex(nameof(GroupedDecimalNumberModex))]
@@ -31,6 +35,7 @@ The pattern is not understood immediately, so the extra verbosity might deterior
 
 ### Modex XML-Documentation
 A new `<modex />` element is supported in the XML documentation of the `string` method that returns the regular-expression pattern. This allows the developer to see the returned pattern without having to run or debug the code.
+
 If the decimal-number example above is changed to:
 ```csharp
 /// <summary>
@@ -48,6 +53,7 @@ This makes it clear that the developer has managed to generate an element of the
 
 ### Modex References
 One `Modex`-returning arrow-property can reference another. This can be done recursively (as long as there is no reference cycle) to reduce duplication and make the `Modex`-returning properties themselves more readable and manageable.
+
 So the decimal-number example above can be rephrased more elegantly as:
 ```csharp
 /// <summary>
@@ -111,5 +117,7 @@ The following list shows all elements available in the **ModularExpressions** pa
 |**TimesBetween**(*min*, *max*)                 |:heavy_multiplication_x:|**Digit**.**TimesBetween**(10, 20)                         |"\\\\d{10,20}"                |
 
 As can be seen in the **NamedGroup** example above, `Modex` elements can be concatenated by a `+` operator.
+
 As can be seen in the **OneOrMoreOf** example above, a `|` operator can be used for alternating between `Modex` elements.
+
 As can be seen in the **Times** example above, a `string` can serve as a `Modex` element by itself.
