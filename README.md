@@ -4,15 +4,23 @@
 
 The **ModularExpressions** package uses a Roslyn source-generator, so these regular-expression patterns are generated at compile-time.
 
+## Install and Setup
+To use Modular Expressions, include [the ModularExpressions NuGet package](https://www.NuGet.org/packages/ModularExpressions) in your C# project.
+
+It is also recommended to add the following to the `.csproj` file of that project (see **Usage** for explanation):
+```xml
+<ItemGroup>
+  <Using Include="ModularExpressions.Modex" Static="true" />
+</ItemGroup>
+```
+
 ## Usage
-To create a Modular Expression, first create a `partial` arrow-property with `Modex` as its return-type in the class where you want the regular-expression pattern generated, and have it return the Modular Expression you want. (See **Modex Elements** below for a list of available elements.)
+To create a Modular Expression, first create an arrow-property with `Modex` as its return-type in the class where you want the regular-expression pattern generated, and have it return the Modular Expression you want. (See **Modex Elements** below for a list of available elements.)
 
 For example, to generate a pattern that matches any text that looks like a decimal number with digit grouping:
 ```csharp
 private static Modex GroupedDecimalNumberModex => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
 ```
-Of course you would then have to make the containing class `partial` as well. (A compilation error would occur if not.)
-
 Then, create a `partial` parameterless method declaration (i.e. without a body) that returns a `string`, and decorate it with the `GenerateModex` attribute, with the name of the `Modex` property as argument.
 
 For the decimal-number example above, it would look like:
@@ -22,9 +30,11 @@ public static partial string GroupedDecimalNumberPattern();
 
 private static Modex GroupedDecimalNumberModex => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
 ```
+Of course, the containing class would then have to be declared `partial` as well. (A compilation error would occur if not.)
+
 And that's it. Now, every time `GroupedDecimalNumberPattern()` is called, it returns the correct regular-expression pattern matching any text that looks like a decimal number with digit grouping.
 
-*Note:* all those built-in Modex elements (`Digit`, `ZeroOrOneOf` and so on) in the example above can appear without a prefix only if a `using static ModularExpressions.Modex;` directive is added at the top of the file. If it is not added, then every such built-in Modex element would have to be prefixed with its (`Modex`) class, making the example above look like:
+*Note:* the `<Using Include="ModularExpressions.Modex" Static="true" />` element mentioned in the ***Install and Setup*** section above allows all those built-in Modex elements (`Digit`, `ZeroOrOneOf` and so on) to appear in the example above without any prefix. If that element is not added to the `.csproj` file as recommended, then every such built-in Modex element would have to be prefixed with its (`Modex`) class, making the example above look like:
 ```csharp
 [GenerateModex(nameof(GroupedDecimalNumberModex))]
 public static partial string GroupedDecimalNumberPattern();
@@ -121,3 +131,8 @@ As can be seen in the **NamedGroup** example above, `Modex` elements can be conc
 As can be seen in the **OneOrMoreOf** example above, a `|` operator can be used for alternating between `Modex` elements.
 
 As can be seen in the **Times** example above, a `string` can serve as a `Modex` element by itself.
+
+## Contribute
+This is a living, developing project, so it might not cover everything that comes to mind.
+If you have a need for a specific regular-expression pattern not supported by this package, or if you find a problem, bug or mismatch with the official Regex language, please contact me using the *Contact owners &rarr;* link on [the NuGet page](https://www.NuGet.org/packages/ModularExpressions) and I will do my best to comply.
+Enjoy!

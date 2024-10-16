@@ -129,7 +129,7 @@ internal sealed class ModexGenerator : IIncrementalGenerator
 /// <summary>
 /// Represents an immutable modular expression.
 /// </summary>
-public abstract class {Constants.ModexClassName}
+internal abstract class {Constants.ModexClassName}
 {{
     private {Constants.ModexClassName}() {{ }}
 
