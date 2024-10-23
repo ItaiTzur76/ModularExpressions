@@ -1,4 +1,5 @@
 # ModularExpressions for C#
+![ModularExpressions logo](https://GitHub.com/ItaiTzur76/ModularExpressions/blob/main/Logo.png)
 ## Project Description
 **ModularExpressions** is a Rosyln-powered generator for regular expressions from .NET syntax. With this **ModularExpressions** package, C# developers can create methods that return regular-expression patterns from basic C# modules and compile-time constants. It therefore allows developers to employ regular expressions using readable, maintainable C# code without having any familiarity with the Regex language.
 
@@ -19,27 +20,27 @@ To create a Modular Expression, first create an arrow-property with `Modex` as i
 
 For example, to generate a pattern that matches any text that looks like a decimal number with digit grouping:
 ```csharp
-private static Modex GroupedDecimalNumberModex => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
+private static Modex GroupedDecimalNumber => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
 ```
 Then, create a `partial` parameterless method declaration (i.e. without a body) that returns a `string`, and decorate it with the `GenerateModex` attribute, with the name of the `Modex` property as argument.
 
 For the decimal-number example above, it would look like:
 ```csharp
-[GenerateModex(nameof(GroupedDecimalNumberModex))]
+[GenerateModex(nameof(GroupedDecimalNumber))]
 public static partial string GroupedDecimalNumberPattern();
 
-private static Modex GroupedDecimalNumberModex => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
+private static Modex GroupedDecimalNumber => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
 ```
 Of course, the containing class would then have to be declared `partial` as well. (A compilation error would occur if not.)
 
 And that's it. Now, every time `GroupedDecimalNumberPattern()` is called, it returns the correct regular-expression pattern matching any text that looks like a decimal number with digit grouping.
 
-*Note:* the `<Using Include="ModularExpressions.Modex" Static="true" />` element mentioned in the ***Install and Setup*** section above allows all those built-in Modex elements (`Digit`, `ZeroOrOneOf` and so on) to appear in the example above without any prefix. If that element is not added to the `.csproj` file as recommended, then every such built-in Modex element would have to be prefixed with its (`Modex`) class, making the example above look like:
+*Note:* the `<Using Include="ModularExpressions.Modex" Static="true" />` element mentioned in the [Install and Setup](#install-and-setup) section above allows all those built-in Modex elements (`Digit`, `ZeroOrOneOf` and so on) to appear in the example above without any prefix. If that element is not added to the `.csproj` file as recommended, then every such built-in Modex element would have to be prefixed with its (`Modex`) class, making the example above look like:
 ```csharp
-[GenerateModex(nameof(GroupedDecimalNumberModex))]
+[GenerateModex(nameof(GroupedDecimalNumber))]
 public static partial string GroupedDecimalNumberPattern();
 
-private static Modex GroupedDecimalNumberModex => Modex.ZeroOrOneOf("-") + (Modex.Digit.TimesBetween(min: 1, max: 3) + Modex.ZeroOrMoreOf("," + Modex.Digit.Times(3)) + Modex.ZeroOrOneOf("." + Modex.ZeroOrMoreOf(Modex.Digit)) | "." + Modex.OneOrMoreOf(Modex.Digit));
+private static Modex GroupedDecimalNumber => Modex.ZeroOrOneOf("-") + (Modex.Digit.TimesBetween(min: 1, max: 3) + Modex.ZeroOrMoreOf("," + Modex.Digit.Times(3)) + Modex.ZeroOrOneOf("." + Modex.ZeroOrMoreOf(Modex.Digit)) | "." + Modex.OneOrMoreOf(Modex.Digit));
 ```
 The pattern is not understood immediately, so the extra verbosity might deteriorate readability.
 
@@ -51,10 +52,10 @@ If the decimal-number example above is changed to:
 /// <summary>
 /// Returns the pattern <b><modex /></b> that matches any text that looks like a decimal number with digit grouping.
 /// </summary>
-[GenerateModex(nameof(GroupedDecimalNumberModex))]
+[GenerateModex(nameof(GroupedDecimalNumber))]
 public static partial string GroupedDecimalNumberPattern();
 
-private static Modex GroupedDecimalNumberModex => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
+private static Modex GroupedDecimalNumber => ZeroOrOneOf("-") + (Digit.TimesBetween(min: 1, max: 3) + ZeroOrMoreOf("," + Digit.Times(3)) + ZeroOrOneOf("." + ZeroOrMoreOf(Digit)) | "." + OneOrMoreOf(Digit));
 ```
 then hovering the mouse over the `GroupedDecimalNumberPattern()` method (or starting to type-out its name) will show the following hint:
 >Returns the pattern <b>"-?(\\\\d{1,3}(,\\\\d{3})*(\\\\.\\\\d*)?|\\\\.\\\\d+)"</b> that matches any text that looks like a decimal number with digit grouping.
@@ -69,28 +70,28 @@ So the decimal-number example above can be rephrased more elegantly as:
 /// <summary>
 /// Returns the pattern <b><modex /></b> that matches any text that looks like a decimal number with digit grouping.
 /// </summary>
-[GenerateModex(nameof(GroupedDecimalNumberModex))]
+[GenerateModex(nameof(GroupedDecimalNumber))]
 public static partial string GroupedDecimalNumberPattern();
 
-private static Modex GroupedDecimalNumberModex => OptionalMinusModex + (DecimalNumberWithAWholePartModex | DecimalNumberWithoutAWholePartModex);
+private static Modex GroupedDecimalNumber => OptionalMinus + (DecimalNumberWithAWholePart | DecimalNumberWithoutAWholePart);
 
-private static Modex OptionalMinusModex => ZeroOrOneOf("-");
+private static Modex OptionalMinus => ZeroOrOneOf("-");
 
-private static Modex DecimalNumberWithAWholePartModex => OneToThreeDigitsModex + OptionalDigitGroupsModex + OptionalFractionPartModex;
+private static Modex DecimalNumberWithAWholePart => OneToThreeDigits + OptionalDigitGroups + OptionalFractionPart;
 
-private static Modex OneToThreeDigitsModex => Digit.TimesBetween(min: 1, max: 3);
+private static Modex OneToThreeDigits => Digit.TimesBetween(min: 1, max: 3);
 
-private static Modex OptionalDigitGroupsModex => ZeroOrMoreOf(DigitGroupModex);
+private static Modex OptionalDigitGroups => ZeroOrMoreOf(DigitGroup);
 
-private static Modex DigitGroupModex => "," + ThreeDigitsModex;
+private static Modex DigitGroup => "," + ThreeDigits;
 
-private static Modex ThreeDigitsModex => Digit.Times(3);
+private static Modex ThreeDigits => Digit.Times(3);
 
-private static Modex OptionalFractionPartModex => ZeroOrOneOf(DecimalNumberWithoutAWholePartModex);
+private static Modex OptionalFractionPart => ZeroOrOneOf(DecimalNumberWithoutAWholePart);
 
-private static Modex DecimalNumberWithoutAWholePartModex => "." + OneOrMoreDigitsModex;
+private static Modex DecimalNumberWithoutAWholePart => "." + OneOrMoreDigits;
 
-private static Modex OneOrMoreDigitsModex => OneOrMoreOf(Digit);
+private static Modex OneOrMoreDigits => OneOrMoreOf(Digit);
 ```
 
 ### Modex Elements
@@ -134,5 +135,7 @@ As can be seen in the **Times** example above, a `string` can serve as a `Modex`
 
 ## Contribute
 This is a living, developing project, so it might not cover everything that comes to mind.
-If you have a need for a specific regular-expression pattern not supported by this package, or if you find a problem, bug or mismatch with the official Regex language, please contact me using the *Contact owners &rarr;* link on [the NuGet page](https://www.NuGet.org/packages/ModularExpressions) and I will do my best to comply.
+
+If you have a need for a specific regular-expression pattern not supported by this package, or if you find a problem, bug or mismatch with the official Regex language, please contact me using the [Contact owners &rarr;](https://www.NuGet.org/packages/ModularExpressions#:~:text=Owners-,Contact%20owners%20%E2%86%92) link on [the NuGet page](https://www.NuGet.org/packages/ModularExpressions) and I will do my best to comply.
+
 Enjoy!
