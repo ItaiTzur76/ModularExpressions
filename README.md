@@ -1,5 +1,5 @@
 # ModularExpressions for C#
-![ModularExpressions logo](https://GitHub.com/ItaiTzur76/ModularExpressions/blob/main/Logo.png)
+![ModularExpressions logo](https://raw.githubusercontent.com/ItaiTzur76/ModularExpressions/main/Logo.png)
 ## Project Description
 **ModularExpressions** is a Rosyln-powered generator for regular expressions from .NET syntax. With this **ModularExpressions** package, C# developers can create methods that return regular-expression patterns from basic C# modules and compile-time constants. It therefore allows developers to employ regular expressions using readable, maintainable C# code without having any familiarity with the Regex language.
 
@@ -8,7 +8,7 @@ The **ModularExpressions** package uses a Roslyn source-generator, so these regu
 ## Install and Setup
 To use Modular Expressions, include [the ModularExpressions NuGet package](https://www.NuGet.org/packages/ModularExpressions) in your C# project.
 
-It is also recommended to add the following to the `.csproj` file of that project (see **Usage** for explanation):
+It is also recommended to add the following to the `.csproj` file of that project (see [Usage](#usage) for explanation):
 ```xml
 <ItemGroup>
   <Using Include="ModularExpressions.Modex" Static="true" />
@@ -16,7 +16,7 @@ It is also recommended to add the following to the `.csproj` file of that projec
 ```
 
 ## Usage
-To create a Modular Expression, first create an arrow-property with `Modex` as its return-type in the class where you want the regular-expression pattern generated, and have it return the Modular Expression you want. (See **Modex Elements** below for a list of available elements.)
+To create a Modular Expression, first create an arrow-property with `Modex` as its return-type in the class where you want the regular-expression pattern generated, and have it return the Modular Expression you want. (See [Modex Elements](#modex-elements) below for a list of available elements.)
 
 For example, to generate a pattern that matches any text that looks like a decimal number with digit grouping:
 ```csharp
