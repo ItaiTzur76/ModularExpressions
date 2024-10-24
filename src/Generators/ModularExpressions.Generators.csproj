@@ -19,6 +19,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>Regex</PackageTags>
     <PackageIcon>Logo.png</PackageIcon>
+    <Copyright>Copyright (c) ItaiTzur 2024</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
